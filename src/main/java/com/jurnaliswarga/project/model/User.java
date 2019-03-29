@@ -1,5 +1,6 @@
 package com.jurnaliswarga.project.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -32,10 +34,47 @@ public class User implements UserDetails {
 
     @NotBlank(message = "password is required")
     private String password;
+
     private String role;
+
     @Email(message = "must be email format")
     @NotBlank(message = "email is required")
     private String email;
+
+    @NotBlank(message = "address is required")
+    private String address;
+
+//    @NotBlank(message = "birthday is required")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    private Date birthday;
+
+    @Enumerated(value = EnumType.ORDINAL)
+    private Gender gender;
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getFullName() {
         return fullName;

@@ -12,6 +12,8 @@ public class Videos{
     private String url;
     private String description;
     private String price;
+
+
     @Enumerated(value = EnumType.ORDINAL)
     private Region region;
 
@@ -48,7 +50,6 @@ public class Videos{
 		this.title = title;
 	}
 
-    @NotBlank(message = "password is required")
     public String getPrice() {
         return price;
     }
@@ -57,7 +58,7 @@ public class Videos{
         this.price = price;
     }
 
-    @NotBlank(message = "password is required")
+    @NotBlank(message = "isi")
     public String getDescription() {
         return description;
     }
@@ -65,8 +66,8 @@ public class Videos{
     public void setDescripton(String description) {
         this.description = description;
     }
-    @Lob
-    private byte[] data;
+//    @Lob
+//    private byte[] data;
 
 //    public Videos() {
 //

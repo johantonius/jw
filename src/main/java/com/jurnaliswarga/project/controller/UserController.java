@@ -10,6 +10,7 @@ import com.jurnaliswarga.project.repository.UserRepository;
 
 import com.jurnaliswarga.project.service.MapValidationErrorService;
 import com.jurnaliswarga.project.service.UserService;
+import com.jurnaliswarga.project.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,9 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
+    private UserValidator userValidator;
+
+    @Autowired
     private UserRepository repository;
 
     @Autowired
@@ -39,10 +43,11 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
 
-//        userValidator.validate(user, result);
+        userValidator.validate(user, result);
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null) return errorMap;
 
+        user.setRole("1");
         User newUser = userService.saveUser(user);
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
