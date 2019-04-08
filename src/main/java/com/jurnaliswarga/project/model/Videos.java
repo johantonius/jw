@@ -1,25 +1,85 @@
 package com.jurnaliswarga.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Videos{
     @Id
     @GeneratedValue
     private Long video_id;
+
+    @JsonProperty
     private String title;
+
+    @JsonProperty
     private String url;
+
+    @JsonProperty
+    private String downloadUrl;
+
+    @JsonProperty
+    private boolean status;
+
+    @JsonProperty
     private String description;
-    private String price;
 
 
     @Enumerated(value = EnumType.ORDINAL)
     private Region region;
 
+    @JsonProperty
+    @Enumerated(value = EnumType.ORDINAL)
+    private Category category;
+
+    private int price;
+
+
+
+    //Setter and Getter
+    public boolean isStatus() {
+        return status;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public Long getVideo_id() {
         return video_id;
     }
+
     public void setVideo_id(Long video_id) {
 		this.video_id = video_id;
     }
@@ -32,7 +92,6 @@ public class Videos{
 		this.url = url;
 	}
 
-    @NotBlank(message = "isi ")
     public Region getRegion() {
         return region;
     }
@@ -41,7 +100,6 @@ public class Videos{
         this.region = region;
     }
 
-    @NotBlank(message = "isi")
 	public String getTitle() {
 		return this.title;
 	}
@@ -49,33 +107,40 @@ public class Videos{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-    public String getPrice() {
-        return price;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    @NotBlank(message = "isi")
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescripton(String description) {
-        this.description = description;
-    }
-//    @Lob
-//    private byte[] data;
-
-//    public Videos() {
+    //Relational dan Database
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private User user;
 //
+//    public User getUser() {
+//        return user;
 //    }
 //
-//    public Videos(String title,  byte[] data) {
-//        this.title = title;
-//        this.data = data;
+//    public void setUser(User user) {
+//        this.user = user;
 //    }
 
+
+
+    @OneToMany
+    private List<Transaction> transaction = new ArrayList<>();
+
+    public List<Transaction> getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(List<Transaction> transaction) {
+        this.transaction = transaction;
+    }
 }

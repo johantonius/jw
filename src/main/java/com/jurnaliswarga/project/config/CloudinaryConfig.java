@@ -34,9 +34,8 @@ public class CloudinaryConfig {
         }
     }
     public  String createUrl(String name, int width, int height, String action){
-        return cloudinary.url()
-                .transformation(new Transformation().width(width).height(height)
-                .border("2px_solid_black").crop(action))
-                .imageTag(name);
+        return (String) cloudinary.url()
+                .transformation(new Transformation().overlay("jw_logo").opacity(50).width(60).gravity("south_east")).videoTag();
+
     }
 }

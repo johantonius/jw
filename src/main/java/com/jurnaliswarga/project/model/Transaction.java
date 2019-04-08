@@ -3,6 +3,11 @@ package com.jurnaliswarga.project.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,7 +16,19 @@ public class Transaction {
     @Id
     @GeneratedValue
     private long trx_id;
-    private String amount;
+
+    private int amount;
+
+    private boolean status;
+
+    //Setter Getter
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public long getTrx_id() {
         return trx_id;
@@ -21,24 +38,42 @@ public class Transaction {
         this.trx_id = trx_id;
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="video_transaction", joinColumns= @JoinColumn(name="trx_id"), inverseJoinColumns = @JoinColumn(name="video_id"))
-    private Set<Videos> videos;
+    //Relation
+    //    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private  User user;
 
-    public Set<Videos> getVideos() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "video_id")
+    @JsonProperty
+    private  Videos videos;
+
+    public Videos getVideos() {
         return videos;
     }
 
-    public void setVideos(Set<Videos> videos) {
+    public void setVideos(Videos videos) {
         this.videos = videos;
     }
+
+
 }

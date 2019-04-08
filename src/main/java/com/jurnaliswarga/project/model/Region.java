@@ -1,9 +1,5 @@
 package com.jurnaliswarga.project.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 
 public enum Region{
     Aceh,
